@@ -1,0 +1,72 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2025 01:48:17 PM
+// Design Name: 
+// Module Name: SimpleProcessor
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+module SimpleProcessor (
+    input clk,
+    input write,
+    input [3:0] switch0,
+    input [3:0] switch1,
+    input [1:0] op_code,
+    output [3:0] alu_result,
+    output [3:0] led_out,
+    output [3:0] pc_out
+);
+
+    wire [3:0] operand1_addr, operand2_addr, result_addr;
+    wire [3:0] R0, R1, alu_out, result_ram;
+    wire output_clock;
+
+    Clock c1 (
+        .input_clock(input_clock),
+        .output_clock(output_clock)
+    );
+
+    ProgramCounter p1 (
+        .clk(output_clock),
+        .pc_out(pc_out)
+    );
+
+    assign operand1_addr = pc_out;
+    assign operand2_addr = pc_out + 1;
+    assign result_addr   = pc_out + 2;
+
+    RAM r1 (
+        .clk(output_clock),
+        .write(write),
+        .Operand_1_Addr(operand1_addr),
+        .Operand_2_Addr(operand2_addr),
+        .Data_in1(switch0),
+        .Data_in2(switch1),
+        .result(alu_out),
+        .Result_Addr(result_addr),
+        .Operand_1_Out(R0),
+        .Operand_2_Out(R1),
+        .Result_Out(result_ram)
+    );
+
+    ALU a1 (
+        .Operand_1(R0),
+        .Operand_2(R1),
+        .Op_Code(op_code),
+        .Result(alu_out)
+    );
+
+    assign alu_result = alu_out;
+    assign led_out = result_ram;
+
+endmodule

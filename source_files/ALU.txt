@@ -1,0 +1,47 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2025 01:38:50 PM
+// Design Name: 
+// Module Name: ALU
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ALU (
+    input [3:0] Operand_1,
+    input [3:0] Operand_2,
+    input [1:0] Op_Code,
+    output reg [3:0] Result = 4'b0000
+);
+    parameter ADD = 2'b00;
+    parameter SUB = 2'b01;
+    parameter AND = 2'b10;
+    parameter OR  = 2'b11;
+
+
+    always @(*) begin
+        case (Op_Code)
+            ADD: Result = Operand_1 + Operand_2;
+            SUB: Result = Operand_1 - Operand_2;
+            AND: Result = Operand_1 & Operand_2;
+            OR:  Result = Operand_1 | Operand_2;
+            default: Result = 4'b0000;
+        endcase
+    end
+endmodule
+
+
+

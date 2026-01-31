@@ -1,0 +1,64 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2025 01:49:51 PM
+// Design Name: 
+// Module Name: testbench
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+module SimpleProcessor_tb;
+
+    reg clk = 0;
+    reg [3:0] switch0;
+    reg [3:0] switch1;
+    reg [1:0] op_code;
+    wire [3:0] alu_result;
+    wire [3:0] led_out;
+    wire [3:0] pc_out;
+    reg write;
+
+    // Instantiate Processor
+    SimpleProcessor uut (
+        .clk(output_clock),
+        .write(write),
+        .switch0(switch0),
+        .switch1(switch1),
+        .op_code(op_code),
+        .alu_result(alu_result),
+        .led_out(led_out),
+        .pc_out(pc_out)
+    );
+
+    // Input clock generation (10ns period)
+    always #5 clk = ~clk;
+
+    initial begin
+        // Initial values
+        switch0 = 4'b0101;     // Operand1 = 5
+        switch1 = 4'b0011;     // Operand2 = 3
+        op_code = 2'b00;       // ADD
+        write = 1;
+
+        #10;   // First half cycle (write = 1)
+
+        write = 0;
+
+        #20;   // Allow second half + some buffer
+
+        
+
+        $finish;
+    end
+endmodule
+

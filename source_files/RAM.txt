@@ -1,0 +1,56 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2025 01:46:17 PM
+// Design Name: 
+// Module Name: RAM
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module RAM (
+    input clk,
+    input write,
+    input [3:0] Operand_1_Addr,
+    input [3:0] Operand_2_Addr,
+    input [3:0] Data_in1,
+    input [3:0] Data_in2,
+    input [3:0] result,
+    input [3:0] Result_Addr,
+    output reg [3:0] Operand_1_Out,
+    output reg [3:0] Operand_2_Out,
+    output reg [3:0] Result_Out
+);
+    reg [3:0] registers [0:15];
+
+    initial begin
+        Operand_1_Out = 4'b0000;
+        Operand_2_Out = 4'b0000;
+        Result_Out = 4'b0000;
+    end
+
+    always @(posedge clk) begin
+        if (write) begin
+            registers[Operand_1_Addr] <= Data_in1;
+            registers[Operand_2_Addr] <= Data_in2;
+            registers[Result_Addr] <= result;
+        end
+        else begin
+            Operand_1_Out <= registers[Operand_1_Addr];
+            Operand_2_Out <= registers[Operand_2_Addr];
+            Result_Out <= registers[Result_Addr];
+        end
+    end
+endmodule

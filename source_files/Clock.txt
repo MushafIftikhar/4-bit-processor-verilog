@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/13/2025 03:57:30 PM
+// Design Name: 
+// Module Name: Clock
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module Clock (
+    input input_clock,
+    output reg output_clock
+);
+    reg [1:0] count = 0;
+
+    always @(posedge input_clock) begin
+        if (count == 0) begin
+            output_clock <= 1;
+            count <= count + 1;
+        end
+        else if (count == 1) begin
+            output_clock <= 0;
+            count <= count + 1;
+        end
+        
+    end
+endmodule
